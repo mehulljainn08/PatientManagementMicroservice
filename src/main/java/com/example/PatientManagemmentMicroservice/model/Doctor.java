@@ -1,18 +1,19 @@
 package com.example.PatientManagemmentMicroservice.model;
 
-import java.util.List;
+
 import java.util.UUID;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Entity
 @Data
+@Table(name="doctors")
 public class Doctor {
 
     @Id
@@ -28,7 +29,6 @@ public class Doctor {
     @NotNull
     private String contactNumber;
 
-    @OneToMany(mappedBy = "assignedDoctor")
-    private List<Case> cases;
+    
     
 }
