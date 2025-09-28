@@ -13,4 +13,5 @@ import java.util.UUID;
 public interface PatientRepository extends JpaRepository<Patient, UUID>,  QueryByExampleExecutor<Patient>{
 
 	List<Patient> findByNameContainingIgnoreCase(String name);
+    boolean existsByEmail(String email);
 }

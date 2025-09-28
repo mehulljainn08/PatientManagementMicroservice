@@ -1,6 +1,9 @@
 package com.example.PatientManagemmentMicroservice.model;
 import java.time.LocalDate;
 import java.util.UUID;
+
+import com.example.PatientManagemmentMicroservice.dto.PatientDTO;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -43,6 +46,23 @@ public class Patient {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
+    public void partialUpdate(PatientDTO dto) {
+        if (dto.getName() != null) {
+            this.setName(dto.getName());
+        }   
+        if (dto.getEmail() != null) {
+            this.setEmail(dto.getEmail());
+        }
+        if (dto.getPhoneNumber() != null) {
+            this.setPhoneNumber(dto.getPhoneNumber());
+        }
+        if (dto.getDateOfBirth() != null) {
+            this.setDateOfBirth(dto.getDateOfBirth());
+        }
+        if (dto.getGender() != null) {
+            this.setGender(Patient.Gender.valueOf(dto.getGender().toUpperCase()));
+        }
+    }
 
     
     

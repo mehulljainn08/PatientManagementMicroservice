@@ -2,7 +2,12 @@ package com.example.PatientManagemmentMicroservice.controller;
 
 import com.example.PatientManagemmentMicroservice.dto.CaseDTO;
 import com.example.PatientManagemmentMicroservice.dto.PatientDTO;
+import com.example.PatientManagemmentMicroservice.dto.PatientRequestDTO;
+import com.example.PatientManagemmentMicroservice.dto.PatientSearchDTO;
 import com.example.PatientManagemmentMicroservice.service.PatientService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,17 +26,16 @@ public class PatientController {
     private PatientService patientService;
 
     
-    @GetMapping
+    @GetMapping("all-patient-record")
     public Page<PatientDTO> getAllPatients(Pageable pageable) {
         return patientService.getAllPatients(pageable);
     }
 
     
-    @GetMapping("/search")
-    public List<PatientDTO> searchPatientsByName(@RequestParam String name) {
-        return patientService.searchPatientsByName(name);
+    @PostMapping("/search")
+    public List<PatientDTO> searchPatients(@RequestBody PatientSearchDTO searchCriteria) {
+        return patientService.searchPatients(searchCriteria);
     }
-
     @GetMapping("/{id}")
     public ResponseEntity<PatientDTO> findPatientById(@PathVariable UUID id){
         PatientDTO patientDTO=patientService.getPatientById(id);
@@ -54,14 +58,15 @@ public class PatientController {
     }
 
 
-    @PostMapping
-    public ResponseEntity<PatientDTO> createPatient(@RequestBody PatientDTO patientDTO) {
-        PatientDTO createdPatient = patientService.addPatient(patientDTO);
-        return new ResponseEntity<>(createdPatient, HttpStatus.CREATED);
+    @PostMapping("/create-patient-record")
+    public ResponseEntity<PatientDTO> createPatient(@Valid @RequestBody PatientRequestDTO patientRequestDTO) {
+        PatientDTO patientToSave = patientService.addPatient(patientRequestDTO);
+      
+        return new ResponseEntity<>(patientToSave, HttpStatus.CREATED);
     }
 
     
-    @PutMapping("/{id}")
+    @PutMapping("/update-patient-record/{id}")
     public ResponseEntity<PatientDTO> updatePatient(@PathVariable UUID id, @RequestBody PatientDTO patientDetails) {
         PatientDTO updatedPatient = patientService.updatePatient(id, patientDetails);
         if (updatedPatient != null) {
@@ -72,7 +77,7 @@ public class PatientController {
     }
 
     
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete-patient-record/{id}")
     public ResponseEntity<?> deletePatient(@PathVariable UUID id) {
         boolean deleted = patientService.deletePatient(id);
         if (deleted) {

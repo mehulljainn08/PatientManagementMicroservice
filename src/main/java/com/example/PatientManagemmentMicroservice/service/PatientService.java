@@ -85,14 +85,14 @@ public class PatientService {
             .collect(Collectors.toList());
     }
     
-    public PatientDTO addPatient(PatientDTO patientDTO) {
-        if(patientRepository.existsByEmail(patientDTO.getEmail())){
-            throw new EmailAlreadyExistsException("A patient with this email "+"already exists"+patientDTO.getEmail());
+    public PatientDTO addPatient(PatientRequestDTO dto) {
+        if(patientRepository.existsByEmail(dto.getEmail())){
+            throw new EmailAlreadyExistsException("A patient with this email "+"already exists"+dto.getEmail());
         }
 
 
-        Patient patientToSave = EntityMapper.toPatientEntity(patientDTO);
-        Patient savedPatient = patientRepository.save(patientToSave);
+        
+        Patient savedPatient = patientRepository.save(EntityMapper.reqPatient(dto));
         return EntityMapper.toPatientDTO(savedPatient);
     }
 

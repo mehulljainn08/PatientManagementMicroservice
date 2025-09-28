@@ -5,6 +5,7 @@ package com.example.PatientManagemmentMicroservice.mapper;
 import com.example.PatientManagemmentMicroservice.dto.CaseDTO;
 import com.example.PatientManagemmentMicroservice.dto.DoctorDTO;
 import com.example.PatientManagemmentMicroservice.dto.PatientDTO;
+import com.example.PatientManagemmentMicroservice.dto.PatientRequestDTO;
 import com.example.PatientManagemmentMicroservice.model.Case;
 import com.example.PatientManagemmentMicroservice.model.Doctor;
 import com.example.PatientManagemmentMicroservice.model.Patient;
@@ -82,6 +83,17 @@ public class EntityMapper {
         doctor.setContactNumber(dto.getPhoneNumber());
         doctor.setSpecialization(dto.getSpecialization());
         return doctor;
+    }
+
+    public static Patient reqPatient(PatientRequestDTO dto){
+        Patient patient= new Patient();
+        patient.setAddress(dto.getAddress());
+        patient.setName(dto.getName());
+        patient.setEmail(dto.getEmail());
+        patient.setPhoneNumber(dto.getPhoneNumber());
+        patient.setDateOfBirth(dto.getDateOfBirth());
+        patient.setGender(dto.getGender());
+        return patient;
     }
 
 }
