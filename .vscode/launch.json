@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-PatientManagemmentMicroserviceApplication<PatientManagemmentMicroservice>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.example.PatientManagemmentMicroservice.PatientManagemmentMicroserviceApplication",
+            "projectName": "PatientManagemmentMicroservice",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
