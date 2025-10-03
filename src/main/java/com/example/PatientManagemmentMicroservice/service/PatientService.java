@@ -105,17 +105,14 @@ public class PatientService {
 
     
         if (optionalPatient.isPresent()) {
-       
-            Patient existingPatient = optionalPatient.get();
 
-        
-            existingPatient.setName(patientDetails.getName());
-            existingPatient.setEmail(patientDetails.getEmail());
-            existingPatient.setPhoneNumber(patientDetails.getPhoneNumber());
-            existingPatient.setDateOfBirth(patientDetails.getDateOfBirth());
-            existingPatient.setGender(Patient.Gender.valueOf(patientDetails.getGender().toUpperCase()));
-        
-        
+            Patient existingPatient = optionalPatient.get();
+            if(patientDetails.getEmail()!=null && !patientDetails.getEmail().equals(existingPatient.getEmail()) && patientRepository.existsByEmail(patientDetails.getEmail())){
+                throw new EmailAlreadyExistsException("This email is already in use by another patient.");
+            }
+       
+            
+            existingPatient.partialUpdate(patientDetails);
             Patient updatedPatient = patientRepository.save(existingPatient);
             return EntityMapper.toPatientDTO(updatedPatient);
         } else {

@@ -2,7 +2,10 @@ package com.example.PatientManagemmentMicroservice.model;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.example.PatientManagemmentMicroservice.dto.PatientDTO;
+import com.example.PatientManagemmentMicroservice.repository.PatientRepository;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -45,6 +48,8 @@ public class Patient {
     @NotNull
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
+    
 
     public void partialUpdate(PatientDTO dto) {
         if (dto.getName() != null) {
